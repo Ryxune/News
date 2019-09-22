@@ -8,15 +8,19 @@
     </div>
     <div>
       <AuthInput
-        placeholder="Phone number电话号码"
+        placeholder="手机号码"
         :value="form.username"
         @input="handleUsername"
         type="text"
+        :rule="/^1[0-9]{4,10}$/"
+        err_message="手机号码格式不正确"
       ></AuthInput>
       <AuthInput
-        placeholder="password 密码"
+        placeholder="密码"
         :value="form.password"
         @input="handlePassword"
+        :rule="/^[0-9a-zA-Z]{3,12}$/"
+        err_message="请输入3-12为的密码"
         type="password"
       ></AuthInput>
     </div>
@@ -48,7 +52,20 @@ export default {
     },
 
     handleSubmit() {
-      console.log(this.form);
+      this.$axios({
+        url: "/login",
+        method: "POST",
+        data: this.form
+      }).then(res => {
+        console.log(res);
+        const { message } = res.data;
+        if (message === "登录成功") {
+          this.$toast.success(message);
+          this.$router.push('/');
+      }else if(message === '用户不存在') {
+        this.$toast.fail('用户名或密码错误');
+      }
+      });
     },
 
     handlePassword(value) {

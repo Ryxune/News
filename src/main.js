@@ -5,8 +5,16 @@ import VueRouter from "vue-router";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 
+import Vant from 'vant';
+import axios from 'axios';
+
+
 
 Vue.use(VueRouter);
+Vue.use(Vant);
+
+Vue.prototype.$axios = axios;
+axios.defaults.baseURL = 'http://localhost:3000';
 
 const routes = [
     { path: '/login', component: Login },

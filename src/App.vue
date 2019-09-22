@@ -20,6 +20,7 @@ export default {
 /* 组件样式，会污染全局 */
 
 @import url('http://at.alicdn.com/t/font_1426139_h6vn3jbl5q.css');
+@import url('../node_modules/vant/lib/index.css');
 
 * {
 	margin: 0;
