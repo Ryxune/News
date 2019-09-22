@@ -3,6 +3,7 @@
   	<div class="skyblue box">
 		  第一个单文件组件{{message}}hahahha
 		<router-link to="/login">登录</router-link>
+		<router-link to="/register">注册</router-link>
 		<router-view></router-view>
 	  </div>
 </template>
@@ -20,24 +21,26 @@ export default {
 
 <style>
 /* 组件样式，会污染全局 */
- .skyblue {
-	 background: #f0ffff;
-	 color:#999;
- }
-
- /* 组件样式 */
-html{
-    font-size: 10vw;
-}
-    
-body{
-    font-size:16px;
+* {
+	margin: 0;
+	padding: 0;
 }
 
-.box{
-    width: 5rem;
-    height:5rem;
-    background: rgb(253, 251, 251);
+a {
+	color:inherit;
 }
+
+a:hover {
+	text-decoration:none;
+}
+
+ul,li ol {
+	list-style:none;
+}
+
+i,em {
+	font-style: normal;
+}
+
 
 </style>
