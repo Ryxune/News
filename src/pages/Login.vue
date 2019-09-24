@@ -24,6 +24,10 @@
         type="password"
       ></AuthInput>
     </div>
+    <p class="tips">
+      没有账号?
+      <router-link to="/register">立即注册</router-link>
+    </p>
     <AuthButton @click="handleSubmit" text="登录"></AuthButton>
   </div>
 </template>
@@ -58,13 +62,16 @@ export default {
         data: this.form
       }).then(res => {
         console.log(res);
-        const { message } = res.data;
+        const { message, data } = res.data;
+
         if (message === "登录成功") {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user_id", data.user.id);
           this.$toast.success(message);
-          this.$router.push('/');
-      }else if(message === '用户不存在') {
-        this.$toast.fail('用户名或密码错误');
-      }
+          this.$router.push("/personal");
+        } else if (message === "用户不存在") {
+          this.$toast.fail("用户名或密码错误");
+        }
       });
     },
 
@@ -79,6 +86,15 @@ export default {
 @import url("http://at.alicdn.com/t/font_1426139_h6vn3jbl5q.css");
 .container {
   padding: 20px;
+
+  .tips {
+    text-align: right;
+    margin: 10px;
+
+    a {
+      color: #007acc;
+    }
+  }
 }
 .close {
   padding: 20px;

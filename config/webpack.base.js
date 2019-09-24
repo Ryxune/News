@@ -12,6 +12,8 @@ const {
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+const CopyPlugin = require('copy-webpack-plugin');
+
 module.exports = {
     // entry: './src/index.js', // 项目入口
 
@@ -69,6 +71,10 @@ module.exports = {
         new CleanWebpackPlugin(),
 
         new VueLoaderPlugin(),
+
+        new CopyPlugin([
+            {from:'static',to:'static'},
+        ]),
 
     ],
 
