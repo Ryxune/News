@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="profile">
-      <img :src="$axios.defaults.baseURL + info.head_img" alt />
+      <img :src="head" alt />
 
       <div class="profile-center">
         <div class="name">
@@ -12,37 +12,56 @@
       </div>
       <span class="iconfont iconjiantou1"></span>
     </div>
+
+    <CellBar title="我的关注" content="关注的用户" />
+    <CellBar title="我的跟帖" content="跟帖/回复" />
+    <CellBar title="我的收藏" content="文章/视频" />
+    <CellBar title="设置" />
   </div>
 </template>
 
 <script>
+import CellBar from "@/components/CellBar";
+
 export default {
+  components: {
+    CellBar
+  },
 
-    components: {
+  data() {
+    return {
+      info: {},
+      head: ""
+    };
+  },
 
-    },
+  mounted() {
+    this.$axios({
+      url: "/user/" + localStorage.getItem("user_id"),
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    }).then(res => {
+      console.log(res);
+      // this.info.head_img = res.data.data.head_img;
+      // this.info.nickname = res.data.data.nickname;
+      const { data } = res.data;
+      this.info = data;
 
-    data(){
-        return {
-            info:{}
-
-        }
-    },
-
-    mounted() {
-        this.$axios({
-            url:"/user/"+localStorage.getItem("user_id"),
-            headers: {
-                Authorization: localStorage.getItem("token"),
-            }
-        }).then(res => {
-            console.log(res);
-            // this.info.head_img = res.data.data.head_img;
-            // this.info.nickname = res.data.data.nickname;
-            const {data} = res.data;
-            this.info = data;
-        })
+      if (this.info.head_img) {
+        this.head = this.$axios.defaults.baseURL + this.info.head_img;
+      } else {
+        this.head = "./static/peng.jpg";
+      }
+      console.log(111111);
+      console.log(this.head);
+    });
+  },
+  methods: {
+    handleClick(event) {
+      console.log(event);
     }
+  }
 };
 </script>
 
