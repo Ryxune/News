@@ -1,21 +1,26 @@
 <template>
   <div class="cell-wrap">
     <div class="cell">
-      <span class="iconfont iconjiantou2" @click="$emit('click',$event)"></span>
+      <span class="iconfont iconjiantou2" @click="$router.back()"></span>
       <i>{{title}}</i>
+      <span class="iconfont iconjiantou1 more"></span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["title"]
+  props: ["title"],
+  data(){
+    return {
+      more:false
+    }
+  }
 };
 </script>
 
 <style scoped lang="less">
 .cell-wrap {
-  margin: 10px;
   padding: 10px;
 
   .cell {
@@ -24,17 +29,19 @@ export default {
     align-items: center;
 
     span {
-      flex: 1;
+      display: block;
+
     }
 
     i {
-      // display: block;
-      // text-align: center;
-      flex: 2;
       font-weight: 600;
       color: #666;
       font-size: 18px;
       font-family: "华文行楷", serif;
+    }
+
+    .more {
+      opacity: 0;
     }
   }
 }

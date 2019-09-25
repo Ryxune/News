@@ -61,7 +61,7 @@ export default {
         method: "POST",
         data: this.form
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         const { message, data } = res.data;
 
         if (message === "登录成功") {

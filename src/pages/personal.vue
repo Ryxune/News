@@ -58,9 +58,6 @@ export default {
     });
   },
   methods: {
-    // handleClick(event) {
-    //   // console.log(event);
-    // },
 
     logout(){
       localStorage.removeItem("token");
