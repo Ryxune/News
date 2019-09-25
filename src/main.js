@@ -5,6 +5,7 @@ import VueRouter from "vue-router";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Personal from "@/pages/Personal";
+import EditInfo from "@/pages/EditInfo";
 
 import Vant from 'vant';
 import axios from 'axios';
@@ -22,6 +23,7 @@ const routes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/personal', component: Personal },
+    { path: '/editinfo', component: EditInfo },
 ];
 
 const router = new VueRouter({
