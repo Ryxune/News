@@ -28,7 +28,7 @@ export default {
 }
 
 body {
-	background: #efefef;
+	background: #f2f2f2;
 }
 
 a {

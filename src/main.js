@@ -7,10 +7,13 @@ import Register from "@/pages/Register";
 import Personal from "@/pages/Personal";
 import EditInfo from "@/pages/EditInfo";
 import UserFollow from "@/pages/UserFollow";
+import Comment from "@/pages/Comment";
+
+import Index from "@/pages/Index";
 
 import Vant from 'vant';
 import axios from 'axios';
-import { Toast } from 'vant';
+// import { Toast } from 'vant';
 
 
 
@@ -26,6 +29,9 @@ const routes = [
     { path: '/personal', component: Personal },
     { path: '/editinfo', component: EditInfo },
     { path: '/userfollow', component: UserFollow },
+    { path: '/comment', component: Comment },
+
+    { path: '/', component: Index },
 ];
 
 const router = new VueRouter({
