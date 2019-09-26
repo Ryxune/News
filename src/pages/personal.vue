@@ -15,7 +15,7 @@
       </div>
     </router-link>
 
-    <CellBar title="我的关注" content="关注的用户" />
+    <CellBar title="我的关注" content="关注的用户" @handleClick="$router.push('/userfollow')"/>
     <CellBar title="我的跟帖" content="跟帖/回复" />
     <CellBar title="我的收藏" content="文章/视频" />
     <CellBar title="退出登录" @handleClick="logout"/>
