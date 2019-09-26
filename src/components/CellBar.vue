@@ -17,7 +17,7 @@ export default {
 <style scoped lang="less">
 .cell-wrap {
   padding-left: 10px;
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid #ccc;
 
   .cell {
     display: flex;
@@ -25,7 +25,7 @@ export default {
     align-items: center;
     padding: 5px;
     height: 48/360 * 100vw;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #efefef;
 
     i {
       display: block;

@@ -27,6 +27,10 @@ export default {
 	padding: 0;
 }
 
+body {
+	background: #efefef;
+}
+
 a {
 	color:inherit;
 }
