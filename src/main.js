@@ -10,8 +10,10 @@ import UserFollow from "@/pages/UserFollow";
 import Comment from "@/pages/Comment";
 
 import Index from "@/pages/Index";
+// import Category from "@/pages/Category";
 
 import Vant from 'vant';
+import { Dialog } from 'vant';
 import axios from 'axios';
 // import { Toast } from 'vant';
 
@@ -19,6 +21,7 @@ import axios from 'axios';
 
 Vue.use(VueRouter);
 Vue.use(Vant);
+Vue.use(Dialog);
 
 Vue.prototype.$axios = axios;
 axios.defaults.baseURL = 'http://localhost:3000';
@@ -32,6 +35,7 @@ const routes = [
     { path: '/comment', component: Comment },
 
     { path: '/', component: Index },
+    // { path: '/category', component: Category },
 ];
 
 const router = new VueRouter({
