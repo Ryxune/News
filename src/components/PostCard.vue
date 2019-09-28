@@ -18,7 +18,7 @@
     <div class="pictures" v-if="post.type == 1 && (post.cover.length>=3)">
       <div class="title">{{post.title}}</div>
       <div class="imgs" >
-        <img :src="item[index].url" alt  v-for="(item,index) in post.cover" :key="index"/>
+        <img :src="item.url" alt  v-for="(item,index) in post.cover" :key="index"/>
       </div>
       <div class="info">
         <span class="author">{{post.author}}</span>
