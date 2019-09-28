@@ -11,17 +11,11 @@
     <div class="tabbar">
       <van-tabs v-model="active" sticky>
         <van-tab v-for="(item,index) in categories" :title="item.name" :key="index">
-          <div class="content" v-for="(item,index) in posts" :key="index">
             <PostCard 
-            :title="item.title"
-            :author="item.user.nickname"
-            :img="item.cover[0].url"
-            :follow="item.comment_length"
-            :type="item.type"
-            :cover="item.cover"
-            :imgs="item.cover"
+              v-for="(item,index) in posts" :key="index"
+              :post="item"
+
             />
-          </div>
         </van-tab>
       </van-tabs>
     </div>
@@ -50,7 +44,7 @@ export default {
       // console.log(data);
       this.categories = data;
       this.$axios({
-        url: `/post?pageIndex=1&pageSize=21&category=999`
+        url: `/post?pageIndex=1&pageSize=${this.pageSize}&category=999`
       }).then(res => {
         let { data } = res.data;
         this.posts = data;
@@ -62,7 +56,8 @@ export default {
     return {
       active: localStorage.getItem("token") ? 1 : 0,
       categories: [],
-      posts: []
+      posts: [],
+      pageSize: 5,
     };
   },
   methods: {

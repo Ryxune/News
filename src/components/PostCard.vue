@@ -1,37 +1,37 @@
 <template>
   <div>
-    <div class="picture" v-if="type == 1 && (cover.length>0 && cover.length<3)">
+    <div class="picture" v-if="post.type == 1 && (post.cover.length>0 && post.cover.length<3)">
       <div class="main">
-        <div class="title">{{title}}</div>
+        <div class="title">{{post.title}}</div>
         <div class="info">
-          <span class="author">{{author}}</span>
+          <span class="author">{{post.author}}</span>
           <span class="follow">
-            <i>{{follow}}</i>跟帖
+            <i>{{post.follow}}</i>??
           </span>
         </div>
       </div>
       <div class="img">
-        <img :src="img" alt />
+        <img :src="post.cover[0].url" alt />
       </div>
     </div>
 
-    <div class="pictures" v-if="type == 1 && (cover.length>=3)">
-      <div class="title">{{title}}</div>
+    <div class="pictures" v-if="post.type == 1 && (post.cover.length>=3)">
+      <div class="title">{{post.title}}</div>
       <div class="imgs" >
-        <img :src="img" alt  v-for="(item,index) in imgs" :key="index"/>
+        <img :src="item[index].url" alt  v-for="(item,index) in post.cover" :key="index"/>
       </div>
       <div class="info">
-        <span class="author">{{author}}</span>
+        <span class="author">{{post.author}}</span>
         <span class="follow">
-          <i>{{follow}}</i>跟帖
+          <i>{{post.follow}}</i>??
         </span>
       </div>
     </div>
 
-    <div class="video" v-if="type == 2">
-      <div class="title">{{title}}</div>
+    <div class="video" v-if="post.type == 2">
+      <div class="title">{{post.title}}</div>
       <div class="video-img">
-        <img :src="img" alt />
+        <img :src="post.cover[0].url" alt />
         <i class="iconfont iconshipin"></i>
       </div>
     </div>
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  props: ["title", "author", "img","follow","type","cover","imgs"]
+  props: ["post"]
 };
 </script>
 
