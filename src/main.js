@@ -11,11 +11,12 @@ import Comment from "@/pages/Comment";
 
 import Index from "@/pages/Index";
 // import Category from "@/pages/Category";
+import PostDetail from "@/pages/PostDetail";
 
 import Vant from 'vant';
 import { Dialog } from 'vant';
 import axios from 'axios';
-// import { Toast } from 'vant';
+import { Toast } from 'vant';
 
 
 
@@ -36,6 +37,8 @@ const routes = [
 
     { path: '/', component: Index },
     // { path: '/category', component: Category },
+
+    { path:'/post_detail/:id', component:PostDetail }
 ];
 
 const router = new VueRouter({
@@ -74,7 +77,7 @@ axios.interceptors.response.use(res => {
 
 
 
- new Vue({
+let app = new Vue({
      el: "#app",
      router,
     //  data: {

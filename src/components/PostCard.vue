@@ -2,7 +2,9 @@
   <div>
     <div class="picture" v-if="post.type == 1 && (post.cover.length>0 && post.cover.length<3)">
       <div class="main">
-        <div class="title">{{post.title}}</div>
+        <router-link :to="`/post_detail/${post.id}`">
+          <div class="title">{{post.title}}</div>
+        </router-link>
         <div class="info">
           <span class="author">{{post.author}}</span>
           <span class="follow">
@@ -10,16 +12,22 @@
           </span>
         </div>
       </div>
-      <div class="img">
-        <img :src="post.cover[0].url" alt />
-      </div>
+      <router-link :to="`/post_detail/${post.id}`">
+        <div class="img">
+          <img :src="post.cover[0].url" alt />
+        </div>
+      </router-link>
     </div>
 
     <div class="pictures" v-if="post.type == 1 && (post.cover.length>=3)">
-      <div class="title">{{post.title}}</div>
-      <div class="imgs" >
-        <img :src="item.url" alt  v-for="(item,index) in post.cover" :key="index"/>
-      </div>
+      <router-link :to="`/post_detail/${post.id}`">
+        <div class="title">{{post.title}}</div>
+      </router-link>
+      <router-link :to="`/post_detail/${post.id}`">
+        <div class="imgs">
+          <img :src="item.url" alt v-for="(item,index) in post.cover" :key="index" />
+        </div>
+      </router-link>
       <div class="info">
         <span class="author">{{post.author}}</span>
         <span class="follow">
@@ -29,11 +37,15 @@
     </div>
 
     <div class="video" v-if="post.type == 2">
-      <div class="title">{{post.title}}</div>
-      <div class="video-img">
-        <img :src="post.cover[0].url" alt />
-        <i class="iconfont iconshipin"></i>
-      </div>
+      <router-link :to="`/post_detail/${post.id}`">
+        <div class="title">{{post.title}}</div>
+      </router-link>
+      <router-link :to="`/post_detail/${post.id}`">
+        <div class="video-img">
+          <img :src="post.cover[0].url" alt />
+          <i class="iconfont iconshipin"></i>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
