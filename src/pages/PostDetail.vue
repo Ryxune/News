@@ -6,8 +6,8 @@
           <span class="iconfont iconjiantou2" @click="$router.back()"></span>
           <span class="iconfont iconnew"></span>
         </div>
-        <div class="focus focus-active" @click="focus" v-if="!detail.has_follow">关注</div>
-        <div class="focus focus-active" @click="focus" v-else>关注</div>
+        <div class="focus" @click="focus" v-if="!detail.has_follow">关注</div>
+        <div class="focus focus-active" @click="unfocus" v-else>已关注</div>
       </div>
 
       <div class="title">
@@ -18,55 +18,98 @@
 
       <div class="other">
         <div class="like">
-          <span class="iconfont icondianzan"></span>
-          112
+          <span class="iconfont icondianzan" :class="{isLike:has_like}" @click="handleLike"></span>
+          {{likeNum}}
         </div>
         <div class="share">
           <span class="iconfont iconweixin"></span>
-          微信
+          <a href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#1">微信</a>
         </div>
       </div>
 
       <div class="footer">
-        <DetailFooter></DetailFooter>
+        <DetailFooter :has_like="detail.has_like"></DetailFooter>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import DetailFooter from "@/components/DetailFooter"
+import DetailFooter from "@/components/DetailFooter";
 export default {
   mounted() {
+    console.log(this.$route.params);
     let { id } = this.$route.params;
     let token = localStorage.getItem("token");
     let config = {
-      url: "/post/" + id
+      url: "/post/" + id,
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
     };
     this.$axios(config).then(res => {
       let { data } = res.data;
       this.detail = data;
-
+      this.likeNum = this.detail.like_length;
+      this.has_like = this.detail.has_like;
       console.log(data);
     });
   },
-  components:{
-    DetailFooter,
+  components: {
+    DetailFooter
   },
   data() {
     return {
       detail: {
-        user:""
+        user: ""
       },
+      likeNum: 0,
+      has_like: false
     };
   },
   methods: {
     focus() {
       this.$axios({
-        url: "/user_follows/",
+        url: "/user_follows/" + this.detail.user.id,
         headers: {
           Authorization: localStorage.getItem("token")
         }
+      }).then(res => {
+        if (res.data.mesage == "关注成功" || res.data.message == "已关注") {
+          this.detail.has_follow = true;
+          this.$toast.success(res.data.message);
+        }
+      });
+    },
+    unfocus() {
+      this.$axios({
+        url: "/user_unfollow/" + this.detail.id,
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then(res => {
+        let { message } = res.data;
+        console.log(message);
+        if (message == "取消关注成功" || message == "未关注该用户") {
+          this.detail.has_follow = false;
+          this.$toast.success(message);
+        }
+      });
+    },
+    handleLike() {
+      this.$axios({
+        url: "/post_like/" + this.detail.id,
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then(res => {
+        this.has_like = !this.has_like;
+        if (res.data.message == "取消成功") {
+          this.likeNum--;
+        } else {
+          this.likeNum++;
+        }
+        this.$toast.success(res.data.message);
       });
     }
   }
@@ -104,10 +147,12 @@ export default {
         padding: 5px 10px;
         border-radius: 50px;
         font-size: 12px;
-      }
-      .focus-active {
         background: #f00;
         color: #fff;
+      }
+      .focus-active {
+        background: #aaa;
+        color: #333;
       }
     }
 
@@ -132,7 +177,7 @@ export default {
     .other {
       display: flex;
       justify-content: space-around;
-      margin: 20px 0;
+      margin: 20px 0 50px 0;
 
       .like {
         font-size: 12px;
@@ -143,6 +188,9 @@ export default {
         span {
           font-size: 16px;
           padding-right: 5px;
+        }
+        .isLike {
+          color: #f00;
         }
       }
 

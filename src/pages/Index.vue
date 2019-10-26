@@ -18,7 +18,7 @@
             @load="onLoad"
             :immediate-check="false"
           >
-            <PostCard v-for="(item,index) in posts" :key="index" :post="item" />
+            <PostCard v-for="(item,index) in posts" :key="index" :post="item" v-if="item.open === 1"/>
           </van-list>
         </van-tab>
       </van-tabs>

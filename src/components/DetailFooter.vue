@@ -6,7 +6,7 @@
         <em>1299</em>
         <i class="iconfont iconpinglun-"></i>
       </span>
-      <i class="iconfont iconshoucang"></i>
+      <i class="iconfont iconshoucang" :class="{collect:isCollect}" @click="handleCollect"></i>
       <i class="iconfont iconfenxiang"></i>
     </div>
 
@@ -19,14 +19,31 @@
 
 <script>
 export default {
+  props: ["has_star"],
   data() {
     return {
-      isFocus: false
+      isFocus: false,
+      isCollect: this.has_star
     };
   },
   methods: {
     handleFocus() {
       this.isFocus = true;
+    },
+    handleCollect() {
+      this.$axios({
+        url: '/post_star/'+this.$route.params.id,
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }).then( res => {
+        this.$toast.success(res.data.message);
+        if(res.data.message == "收藏成功") {
+          this.isCollect = true;
+        }else {
+          this.isCollect = false;
+        }
+      })
     }
   }
 };
@@ -110,6 +127,10 @@ export default {
 
   .iconfont {
     font-size: 24px;
+  }
+
+  .collect {
+    color: #f00;
   }
 }
 </style>
