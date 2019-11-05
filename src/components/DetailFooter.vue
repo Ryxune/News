@@ -2,28 +2,31 @@
   <div class="wrap">
     <div class="footer" v-show="!isFocus">
       <input type="text" placeholder="写跟帖" @focus="handleFocus" />
-      <span class="comment">
-        <em>1299</em>
-        <i class="iconfont iconpinglun-"></i>
-      </span>
+      <router-link :to="`/post_comment/${this.$route.params.id}`">
+        <span class="comment">
+          <em>{{commentLength}}</em>
+          <i class="iconfont iconpinglun-"></i>
+        </span>
+      </router-link>
       <i class="iconfont iconshoucang" :class="{collect:isCollect}" @click="handleCollect"></i>
       <i class="iconfont iconfenxiang"></i>
     </div>
 
     <div class="footer-comment" v-show="isFocus">
-      <textarea rows="3" ref="commentText" @blur="isFocus = false" :autofocus="isFocus"></textarea>
-      <span>发送</span>
+      <textarea rows="3" ref="commentText" @blur="handleBlur" :autofocus="isFocus" v-model="value"></textarea>
+      <span @click="handleSubmit">发送</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["has_star"],
+  props: ["has_star", "commentLength", "post"],
   data() {
     return {
       isFocus: false,
-      isCollect: this.has_star
+      isCollect: this.has_star,
+      value: ""
     };
   },
   methods: {
@@ -32,18 +35,52 @@ export default {
     },
     handleCollect() {
       this.$axios({
-        url: '/post_star/'+this.$route.params.id,
+        url: "/post_star/" + this.$route.params.id,
         headers: {
           Authorization: localStorage.getItem("token")
         }
-      }).then( res => {
+      }).then(res => {
         this.$toast.success(res.data.message);
-        if(res.data.message == "收藏成功") {
+        if (res.data.message == "收藏成功") {
           this.isCollect = true;
-        }else {
+        } else {
           this.isCollect = false;
         }
-      })
+      });
+    },
+    handleBlur() {
+      if (!this.value) {
+        this.isFocus = false;
+      }
+    },
+    handleSubmit() {
+      if (!this.value) {
+        this.$message.fail("请输入内容再发布");
+        return;
+      }
+
+      this.$axios({
+        url: "/post_comment/" + this.post.id,
+        headers: {
+          Authorization: localStorage.getItem("token")
+        },
+        method: "POST",
+        data: {
+          content: this.value
+        }
+      }).then(res => {
+        let { message } = res.data;
+
+        if (message === "评论发布成功") {
+          // 更新评论列表
+          this.$emit("getComments", this.post.id);
+          this.isFocus = false;
+          this.value = "";
+
+          // 滚动到底部
+          // window.scrollTo(0, document.body.offsetHeight);
+        }
+      });
     }
   }
 };
@@ -90,7 +127,7 @@ export default {
         font-size: 10px;
         height: 14px;
         line-height: 14px;
-        left: 5px;
+        left: 13px;
         top: -5px;
       }
     }
@@ -115,13 +152,12 @@ export default {
     span {
       font-size: 12px;
       background: #f00;
-      width: 60/360*100vw;
-      height: 26/360*100vw;
-      line-height: 26/360*100vw;
+      width: 60/360 * 100vw;
+      height: 26/360 * 100vw;
+      line-height: 26/360 * 100vw;
       color: #fff;
       text-align: center;
       border-radius: 50px;
-
     }
   }
 

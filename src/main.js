@@ -8,6 +8,7 @@ import Personal from "@/pages/Personal";
 import EditInfo from "@/pages/EditInfo";
 import UserFollow from "@/pages/UserFollow";
 import Comment from "@/pages/Comment";
+import CommentList from "@/pages/CommentList";
 
 import Index from "@/pages/Index";
 // import Category from "@/pages/Category";
@@ -34,6 +35,7 @@ const routes = [
     { path: '/editinfo', component: EditInfo },
     { path: '/userfollow', component: UserFollow },
     { path: '/comment', component: Comment },
+    { path: '/post_comment/:id', component: CommentList },
 
     { path: '/', component: Index },
     // { path: '/category', component: Category },

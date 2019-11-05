@@ -46,7 +46,7 @@
     </div>
 
     <div class="footer">
-      <DetailFooter :has_like="detail.has_like"></DetailFooter>
+      <DetailFooter :has_like="detail.has_like" :commentLength="detail.comment_length" :post="detail"></DetailFooter>
     </div>
   </div>
 </template>
@@ -80,7 +80,7 @@ export default {
         user: ""
       },
       likeNum: 0,
-      has_like: false
+      has_like: false,
     };
   },
   methods: {
