@@ -26,7 +26,8 @@ export default {
     return {
       isFocus: false,
       isCollect: this.has_star,
-      value: ""
+      value: "",
+      num: this.commentLength
     };
   },
   methods: {
@@ -70,6 +71,7 @@ export default {
         }
       }).then(res => {
         let { message } = res.data;
+        this.num += 1;
 
         if (message === "评论发布成功") {
           // 更新评论列表

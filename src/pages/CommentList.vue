@@ -10,7 +10,7 @@
             <span class="time">2小时前</span>
           </div>
         </div>
-        <div class="replay" @click="replay()">回复</div>
+        <div class="replay" @click="handleReply(item)">回复</div>
       </div>
 
       <!-- 评论楼层 -->
@@ -45,7 +45,8 @@ export default {
   data() {
     return {
       commentList: [],
-      detail: {}
+      detail: {},
+      replyComment: null
     };
   },
   mounted() {
@@ -72,6 +73,10 @@ export default {
       }).then(res => {
         this.commentList = res.data.data;
       });
+    },
+    handleReply(item) {
+      console.log(11233,item);
+      this.replyComment = item;
     }
   }
 };
